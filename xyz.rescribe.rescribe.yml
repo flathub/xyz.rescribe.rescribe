@@ -6,9 +6,9 @@ sdk-extensions: org.freedesktop.Sdk.Extension.golang
 build-options:
   append-path: /usr/lib/sdk/golang/bin
 finish-args:
-  - --socket=fallback-x11
+  - --socket=x11
   - --share=ipc # needed for X11
-  - --socket=wayland
+  #- --socket=wayland # fyne wayland build disables x11, so just stick with x11 for now
   - --device=dri # OpenGL
   - --share=network # Used for google book downloading
   - --filesystem=home
@@ -17,7 +17,7 @@ modules:
   - name: rescribe
     buildsystem: simple
     build-commands:
-      - cd cmd/rescribe && go build -tags wayland .
+      - cd cmd/rescribe && go build .
       - install -Dm00755 cmd/rescribe/rescribe $FLATPAK_DEST/bin/rescribe-bin
       - install -Dm00644 cmd/rescribe/icon.256.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/xyz.rescribe.rescribe.png
       - install -Dm00644 cmd/rescribe/xyz.rescribe.rescribe.desktop $FLATPAK_DEST/share/applications/xyz.rescribe.rescribe.desktop
