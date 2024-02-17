@@ -1,6 +1,6 @@
 app-id: xyz.rescribe.rescribe
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions: org.freedesktop.Sdk.Extension.golang
 build-options:
@@ -31,11 +31,11 @@ modules:
     sources:
       - type: git
         url: https://github.com/rescribe/bookpipeline
-        tag: v1.1.0
-        commit: 3dd003691436ed954d3b7de54affbb10b509d5a6
+        tag: v1.2.0
+        commit: bf6e4762191aee0c27242f1d9cbbc2b8972c12f9
       - type: archive
-        url: https://rescribe.xyz/rescribe/modules-20230213-3dd003.tar.xz
-        sha256: 36553c4b97ceefc2c4711d18f26c98d89a9a610cb99bd2a38b7a0bbf3236eb4a
+        url: https://rescribe.xyz/rescribe/modules-20240206-d2399a.tar.xz
+        sha256: 682820d4cb6129c564cf8df494dc12d35ab059ed99dba34c0b3d6260f7fc30fb
         strip-components: 0
       - type: archive
         url: https://rescribe.xyz/rescribe/embeds/tessdata.20220322.zip
