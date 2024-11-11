@@ -50,7 +50,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/tesseract-ocr/tesseract
-        tag: 5.2.0
+        tag: 5.5.0
         commit: 64eab6c457b2337dd690746a5fde5c222b40d5f8
   - name: getxbook
     buildsystem: simple
