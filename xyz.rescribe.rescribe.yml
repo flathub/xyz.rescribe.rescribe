@@ -1,8 +1,9 @@
 app-id: xyz.rescribe.rescribe
 runtime: org.freedesktop.Platform
-runtime-version: '23.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
-sdk-extensions: org.freedesktop.Sdk.Extension.golang
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.golang
 build-options:
   append-path: /usr/lib/sdk/golang/bin
 finish-args:
@@ -14,6 +15,27 @@ finish-args:
   - --filesystem=home
 command: rescribe
 modules:
+  - name: leptonica
+    sources:
+      - type: git
+        url: https://github.com/DanBloomberg/leptonica
+        tag: 1.85.0
+        commit: 63aef18d98432b8582a1565e241f7bd2ee9cc8d9
+  - name: tesseract-ocr
+    sources:
+      - type: git
+        url: https://github.com/tesseract-ocr/tesseract
+        tag: 5.5.0
+        commit: 64eab6c457b2337dd690746a5fde5c222b40d5f8
+  - name: getxbook
+    buildsystem: simple
+    build-commands:
+      - make PREFIX=$FLATPAK_DEST install
+    sources:
+      - type: git
+        url: https://git.njw.name/getxbook.git
+        commit: b14f62f36939e0c14f12d4a823c9b1d701420cd4
+        disable-shallow-clone: true
   - name: rescribe
     buildsystem: simple
     build-commands:
@@ -40,24 +62,7 @@ modules:
         url: https://rescribe.xyz/rescribe/embeds/tessdata.20220322.zip
         sha256: 725fd570a3c3dc0eba9463248ce47a8646db8bafb198d428d6bb8f0be18540ee
         dest: cmd/rescribe
-  - name: leptonica
-    sources:
-      - type: git
-        url: https://github.com/DanBloomberg/leptonica
-        tag: 1.82.0
-        commit: f4138265b390f1921b9891d6669674d3157887d8
-  - name: tesseract-ocr
-    sources:
-      - type: git
-        url: https://github.com/tesseract-ocr/tesseract
-        tag: 5.2.0
-        commit: 5ad5325a0aa8effc47ca033625b6a51682f82767
-  - name: getxbook
-    buildsystem: simple
-    build-commands:
-      - make PREFIX=$FLATPAK_DEST install
-    sources:
-      - type: git
-        url: https://git.njw.name/getxbook.git
-        commit: c770a86cca74f3b6235000c77c2ab74487e2ac2a
-        disable-shallow-clone: true
+      - type: patch
+        path: fix-build.patch
+        # fixes https://github.com/go-gl/glfw/issues/359
+        # can be removed when glfw v3.4 is available and used by bookpipeline
